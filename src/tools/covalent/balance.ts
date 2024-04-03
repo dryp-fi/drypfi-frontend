@@ -12,6 +12,5 @@ export const getWalletBalance = async (
     walletAddress,
   );
 
-  console.log('dad', data);
   return data.data.items;
 };

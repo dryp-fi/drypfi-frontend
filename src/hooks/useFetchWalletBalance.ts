@@ -1,6 +1,5 @@
 'use client';
 
-import { ChainID } from '@covalenthq/client-sdk';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -9,7 +8,7 @@ import { tokenList } from '@/constants/tokens/token-list';
 import aave from '@/contracts/aave/balance';
 import { chainInfo } from '@/helpers/chain-info';
 import { tokenActions } from '@/redux/features/token-slice';
-import { getWalletBalance as balance } from '@/tools/covalent/balance';
+import { getWalletBalance } from '@/tools/moralis/balance';
 
 import { TTokenBalance } from '@/types/token-list';
 
@@ -23,22 +22,15 @@ export const useFetchWalletBalance = (
   const fetchBalance = async () => {
     if (!chainId || !userAddress) return;
 
-    // const data = await getWalletBalance(chainId, userAddress);
-
-    const data = await balance(chainId as ChainID, userAddress);
+    const data = await getWalletBalance(chainId, userAddress);
 
     const filteredTokens = data?.filter(
-      (token) =>
-        token.contract_ticker_symbol === 'ETH' ||
-        'WETH' ||
-        'USDC' ||
-        'USDT' ||
-        'WBTC',
+      (token) => token.symbol === 'ETH' || 'WETH' || 'USDC' || 'USDT' || 'WBTC',
     );
 
-    const formattedTokens = tokenList.map((token) => {
+    const formattedTokens: Array<TTokenBalance> = tokenList.map((token) => {
       const tokenInWallet = filteredTokens?.find(
-        (token2) => token2.contract_ticker_symbol === token.symbol,
+        (token2) => token2.symbol === token.symbol,
       );
 
       if (tokenInWallet) {
@@ -46,7 +38,7 @@ export const useFetchWalletBalance = (
           symbol: token.symbol,
           thumbnail: token.thumbnail,
           decimals: token.decimals,
-          token_address: tokenInWallet.contract_address,
+          token_address: tokenInWallet.token_address,
           balance: tokenInWallet.balance,
         };
       }
