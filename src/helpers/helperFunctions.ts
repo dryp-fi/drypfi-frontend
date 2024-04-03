@@ -9,14 +9,13 @@ export const convertStatsToArray = (stats: TStats) => {
       label: 'Net worth',
       value: netWorth ? `$${netWorth}` : '-',
       valueColor: 'text-white',
-      description: "Total net-worth on Base chain"
+      description: 'Total net-worth on Base chain',
     },
     {
       label: 'Net APY',
       value: netApy !== null ? `${netApy} %` : '-',
       valueColor: 'text-white',
-      description: "Net APY percentage on Base chain"
-
+      description: 'Net APY percentage on Base chain',
     },
   ];
 };
@@ -33,7 +32,7 @@ export const getButtonSettings = (props: any) => {
         : props.approveHandler;
       break;
     case assetItemType.BORROW:
-      buttonText = props.isApproved ? 'Borrow USDC' : 'Approve USDC';
+      buttonText = props.isApproved ? 'Borrow USDC' : 'Approve USDC Delegation';
       buttonHandler = props.isApproved
         ? props.submitHandler
         : props.approveHandler;
