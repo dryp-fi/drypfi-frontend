@@ -17,6 +17,9 @@ const Home = () => {
 
   return (
     <div className='p-4 '>
+      <p className='text-center font-semibold text-3xl mt-10 mb-20 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-300 to-slate-700'>
+        Cross-chain Lending and Borrowing protocol
+      </p>
       <HeaderCard address={address} isConnected={isConnected} stats={stats} />
       <div className='flex px-28 gap-5 -top-10 relative'>
         <SupplyCard stats={stats} />
